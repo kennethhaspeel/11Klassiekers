@@ -8,7 +8,6 @@ import {
   primaryKey,
 } from "drizzle-orm/pg-core";
 
-
 export const deelnemers = pgTable("deelnemers", {
   id: serial("id").primaryKey(),
   voornaam: varchar("first_name").notNull(),
@@ -59,11 +58,15 @@ export const renners = pgTable("renners", {
     .notNull()
     .references(() => ploegen.id),
   foto: varchar("foto"),
+  vlag: varchar("vlag"),
+  nationaliteit: varchar("nationaliteit").notNull(),
+  url: varchar("url").notNull(),
 });
 
 export const ploegen = pgTable("ploegen", {
   id: serial("id").primaryKey(),
   naam: varchar("naam").notNull(),
+  url: varchar("url").notNull(),
 });
 
 export const wedstrijden = pgTable("wedstrijden", {

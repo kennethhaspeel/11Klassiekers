@@ -1,4 +1,4 @@
-import { format, parse, parseISO } from "date-fns";
+import { format} from "date-fns";
 
 export const DatumVoorbij = (datum:string) => {
     const dat = new Date(datum);

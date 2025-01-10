@@ -17,7 +17,7 @@ const Header = () => {
   const isAdmin = !isLoading && getPermission("admin")?.isGranted;
 
   return (
-    <header className="animate-slide h-12 p-3 text-white bg-black/70 border-b sticky top-0 z-20 rounded-2xl">
+    <header className="animate-slide h-12 p-3 text-white bg-black/80 border-b sticky top-0 z-20 rounded-2xl">
       <div className="flex h-8 items-center justify-between w-full">
         <div className="flex items-center">
           <Button
@@ -102,7 +102,7 @@ const Header = () => {
                   asChild
                 >
                   <Link
-                    href="Admin/UitslagVerwerken"
+                    href="Admin/OverzichtWedstrijden"
                     className="flex justify-center items-center gap-2 ml-0"
                     title="Uitslag Verwerken"
                   >
