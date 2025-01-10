@@ -1,19 +1,18 @@
-import Footer from "@/ui-blocks/Footer";
-import Header from "@/ui-blocks/Header";
 
-export default function Home() {
+//import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+
+export default async function Home() {
+  // const { isAuthenticated, getUser, getPermissions } = getKindeServerSession();
+  // const authenticated = await isAuthenticated();
+  //const user = await getUser()
+  //const permissions = await getPermissions()
+  // console.log(permissions)
+  // console.log(user)
   return (
-    <div className="bg-black bg-home-img bg-cover bg-center">
-      <div className="flex flex-col w-full lg:max-w-7xl mx-auto  h-dvh">
-        <Header />
-        <main className="flex-grow justify-center text-center mx-auto p-3">
-          <div className="flex flex-col gap-6 p-12 rounded-xl bg-black/70 mx-auto text-white sm:text-2xl">
-           <h1>Welkom bij de 11 klassiekers</h1>
-          </div>
-         
-          </main>
-        <Footer />
+    <main className="flex-grow justify-center text-center mx-auto p-3">
+      <div className="flex flex-col flex-grow gap-6 p-12 rounded-xl mx-auto text-white sm:text-2xl">
+        <h1>Welkom bij de 11 klassiekers</h1>
       </div>
-    </div>
+    </main>
   );
 }
