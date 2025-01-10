@@ -1,0 +1,470 @@
+{
+  "id": "485ef9af-db2d-4ed8-a149-2950e3caf253",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.deelnemers": {
+      "name": "deelnemers",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "first_name": {
+          "name": "first_name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "last_name": {
+          "name": "last_name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "phone": {
+          "name": "phone",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "teamnaam": {
+          "name": "teamnaam",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "active": {
+          "name": "active",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "deelnemers_email_unique": {
+          "name": "deelnemers_email_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "email"
+          ]
+        },
+        "deelnemers_phone_unique": {
+          "name": "deelnemers_phone_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "phone"
+          ]
+        },
+        "deelnemers_teamnaam_unique": {
+          "name": "deelnemers_teamnaam_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "teamnaam"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.ploegen": {
+      "name": "ploegen",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "naam": {
+          "name": "naam",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.renners": {
+      "name": "renners",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "naam": {
+          "name": "naam",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "uciranking": {
+          "name": "uciranking",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ploegid": {
+          "name": "ploegid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "foto": {
+          "name": "foto",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "renners_ploegid_ploegen_id_fk": {
+          "name": "renners_ploegid_ploegen_id_fk",
+          "tableFrom": "renners",
+          "tableTo": "ploegen",
+          "columnsFrom": [
+            "ploegid"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.selecties": {
+      "name": "selecties",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "deelnemerid": {
+          "name": "deelnemerid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "rennerid": {
+          "name": "rennerid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "active": {
+          "name": "active",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "datum_in": {
+          "name": "datum_in",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "datum_uit": {
+          "name": "datum_uit",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "selecties_deelnemerid_deelnemers_id_fk": {
+          "name": "selecties_deelnemerid_deelnemers_id_fk",
+          "tableFrom": "selecties",
+          "tableTo": "deelnemers",
+          "columnsFrom": [
+            "deelnemerid"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "selecties_rennerid_renners_id_fk": {
+          "name": "selecties_rennerid_renners_id_fk",
+          "tableFrom": "selecties",
+          "tableTo": "renners",
+          "columnsFrom": [
+            "rennerid"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.tussenstand": {
+      "name": "tussenstand",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "deelnemer_id": {
+          "name": "deelnemer_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "wedstrijd_id": {
+          "name": "wedstrijd_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "renner_id": {
+          "name": "renner_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "positie": {
+          "name": "positie",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "punten": {
+          "name": "punten",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "tussenstand_deelnemer_id_deelnemers_id_fk": {
+          "name": "tussenstand_deelnemer_id_deelnemers_id_fk",
+          "tableFrom": "tussenstand",
+          "tableTo": "deelnemers",
+          "columnsFrom": [
+            "deelnemer_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "tussenstand_wedstrijd_id_wedstrijden_id_fk": {
+          "name": "tussenstand_wedstrijd_id_wedstrijden_id_fk",
+          "tableFrom": "tussenstand",
+          "tableTo": "wedstrijden",
+          "columnsFrom": [
+            "wedstrijd_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "tussenstand_renner_id_renners_id_fk": {
+          "name": "tussenstand_renner_id_renners_id_fk",
+          "tableFrom": "tussenstand",
+          "tableTo": "renners",
+          "columnsFrom": [
+            "renner_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.uitslagen": {
+      "name": "uitslagen",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "wedstrijd_id": {
+          "name": "wedstrijd_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "renner_id": {
+          "name": "renner_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "positie": {
+          "name": "positie",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "punten": {
+          "name": "punten",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "uitslagen_wedstrijd_id_wedstrijden_id_fk": {
+          "name": "uitslagen_wedstrijd_id_wedstrijden_id_fk",
+          "tableFrom": "uitslagen",
+          "tableTo": "wedstrijden",
+          "columnsFrom": [
+            "wedstrijd_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "uitslagen_renner_id_renners_id_fk": {
+          "name": "uitslagen_renner_id_renners_id_fk",
+          "tableFrom": "uitslagen",
+          "tableTo": "renners",
+          "columnsFrom": [
+            "renner_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.wedstrijden": {
+      "name": "wedstrijden",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "naam": {
+          "name": "naam",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "datum": {
+          "name": "datum",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "afgesloten": {
+          "name": "afgesloten",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
