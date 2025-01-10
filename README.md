@@ -14,18 +14,17 @@
 -   🔗  [Vercel](https://vercel.com/home)
 
 ## To Do
-- [x] Database setup 
+- [X] Database setup 
 - [ ] Mail setup
-- [ ] Registratieformulier
 - [ ] Reglement pagina
-- [x] Login formulier
-- [x] Registreer formulier
-- [x] Log Uit formulier
+- [X] Login formulier
+- [X] Registreer formulier
+- [X] Log Uit formulier
 - [ ] Renners en extra data scrapen
-- [ ] Wedstrijden toevoegen
+- [X] Wedstrijden toevoegen
 - [ ] Maak renner selectie (voor start van seizoen)
 - [ ] Transfer pagina (tussen wedstrijden)
 - [ ] Scrape uitslag van wedstrijd (kopieren en plakken url)
 - [ ] Verwerken van uitslag in database
 - [ ] Tussenstand pagina
-- [x] Licht / Donker Thema
+- [X] Licht / Donker Thema
