@@ -1,0 +1,1 @@
+ALTER TABLE "deelnemers" ADD COLUMN "kinde" varchar;

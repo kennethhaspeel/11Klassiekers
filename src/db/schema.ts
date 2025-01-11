@@ -10,6 +10,7 @@ import {
 
 export const deelnemers = pgTable("deelnemers", {
   id: serial("id").primaryKey(),
+  kinde: varchar("kinde"),
   voornaam: varchar("first_name").notNull(),
   naam: varchar("last_name").notNull(),
   email: varchar("email").unique().notNull(),

@@ -13,9 +13,13 @@ import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 
 const Header = () => {
   const mobiel = useIsMobile();
-  const { getPermission, isLoading, isAuthenticated } = useKindeBrowserClient();
-  const isAdmin = !isLoading && getPermission("admin")?.isGranted;
 
+  const { isAuthenticated, isLoading,getPermission } = useKindeBrowserClient();
+
+ const isAdmin = !isLoading && getPermission("admin")?.isGranted;
+// const isAdmin = true
+// const isLoading = false
+// const isAuthenticated = false
   return (
     <header className="animate-slide h-12 p-3 text-white bg-black/80 border-b sticky top-0 z-20 rounded-2xl">
       <div className="flex h-8 items-center justify-between w-full">
@@ -43,7 +47,7 @@ const Header = () => {
           <>
             <div className="flex  gap-2">
               <div className="flex ">
-              <Button
+                <Button
                   variant="ghost"
                   size="default"
                   aria-label="wedstrijden"
@@ -90,77 +94,83 @@ const Header = () => {
                 </Button>
               </div>
             </div>
-            {
-              isAdmin ? (
-                <>
-              <div className="flex ">
-                <Button
-                  variant="ghost"
-                  size="default"
-                  aria-label="home"
-                  className="rounded-full"
-                  asChild
-                >
-                  <Link
-                    href="Admin/OverzichtWedstrijden"
-                    className="flex justify-center items-center gap-2 ml-0"
-                    title="Uitslag Verwerken"
-                  >
-                    Uitslag verwerken
-                  </Link>
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="default"
-                  aria-label="deelnemers"
-                  className="rounded-full"
-                  asChild
-                >
-                  <Link
-                    href="Admin/deelnemers"
-                    className="flex justify-center items-center gap-2 ml-0"
-                    title="Deelnemers"
-                  >
-                    Deelnemers
-                  </Link>
-                </Button>
-              </div>
-                </>
-              ):('')
-            }
-            <div className="flex items-center gap-2">
-              <div className="flex items-center">
-                {!isAuthenticated ? (
-                  <>
-                    <Button
-                      variant="ghost"
-                      size="default"
-                      aria-label="log in"
-                      asChild
-                    >
-                      <LoginLink>Log In</LoginLink>
-                    </Button>
-
-                    <Button asChild>
-                      <RegisterLink>Registreer</RegisterLink>
-                    </Button>
-                  </>
-                ) : (
+            {isAdmin ? (
+              <>
+                <div className="flex ">
                   <Button
                     variant="ghost"
-                    size="icon"
-                    aria-label="LogOut"
-                    title="LogOut"
+                    size="default"
+                    aria-label="home"
                     className="rounded-full"
                     asChild
                   >
-                    <LogoutLink>
-                      <LogOut />
-                    </LogoutLink>
+                    <Link
+                      href="Admin/OverzichtWedstrijden"
+                      className="flex justify-center items-center gap-2 ml-0"
+                      title="Uitslag Verwerken"
+                    >
+                      Uitslag verwerken
+                    </Link>
                   </Button>
+                  <Button
+                    variant="ghost"
+                    size="default"
+                    aria-label="deelnemers"
+                    className="rounded-full"
+                    asChild
+                  >
+                    <Link
+                      href="Admin/deelnemers"
+                      className="flex justify-center items-center gap-2 ml-0"
+                      title="Deelnemers"
+                    >
+                      Deelnemers
+                    </Link>
+                  </Button>
+                </div>
+              </>
+            ) : (
+              ""
+            )}
+             <div className="flex items-center gap-2">
+              <div className="flex items-center">
+                {isLoading ? (
+                  <p>laden</p>
+                ) : (
+                  <div>
+                    {!isAuthenticated ? (
+                      <>
+                        <Button
+                          variant="ghost"
+                          size="default"
+                          aria-label="log in"
+                          asChild
+                        >
+                          <LoginLink>Log In</LoginLink>
+                        </Button>
+
+                        <Button asChild>
+                          <RegisterLink>Registreer</RegisterLink>
+                        </Button>
+                      </>
+                    ) : (
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        aria-label="LogOut"
+                        title="LogOut"
+                        className="rounded-full"
+                        asChild
+                      >
+                        <LogoutLink>
+                          <LogOut />
+                        </LogoutLink>
+                      </Button>
+                    )}
+                  </div>
                 )}
               </div>
-            </div>
+            </div> 
           </>
         )}
       </div>
