@@ -7,7 +7,7 @@ import Footer from "@/ui-blocks/Footer";
 const inter = Inter({
   subsets: ["latin"],
 });
-
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 export const metadata: Metadata = {
   title: {
@@ -23,7 +23,11 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
+  const { isAuthenticated, getPermissions } = getKindeServerSession();
+  const auth = await isAuthenticated()
+const auths = await getPermissions() || []
+console.log(auths.permissions || [])
+  console.log(auth)
   return (
     <html lang="nl-be" suppressHydrationWarning>
       <body className={`${inter.className} `}>
