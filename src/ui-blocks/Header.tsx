@@ -10,8 +10,11 @@ import {
 } from "@kinde-oss/kinde-auth-nextjs/components";
 import { LogOut } from "lucide-react";
 
-
-const Header = () => {
+interface Props {
+  auth: boolean;
+  rechten: string[] | undefined
+}
+const Header = ({auth,rechten}: Props) => {
   const mobiel = useIsMobile();
 
   //const { isAuthenticated, isLoading, getPermission } = useKindeBrowserClient();
