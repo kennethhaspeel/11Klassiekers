@@ -24,10 +24,9 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const { isAuthenticated, getPermissions } = getKindeServerSession();
-  const auth = await isAuthenticated()
+  const authenticated = await isAuthenticated()
 const auths = await getPermissions() 
-console.log(auths?.permissions)
-  console.log(auth)
+
   return (
     <html lang="nl-be" suppressHydrationWarning>
       <body className={`${inter.className} `}>
@@ -39,7 +38,7 @@ console.log(auths?.permissions)
         >
           <div className="h-dvh bg-home-img bg-cover bg-center">
             <div className="flex flex-col w-full lg:max-w-7xl mx-auto">
-              <Header auth={auth} rechten={auths?.permissions}/>
+              <Header authenticated={authenticated} rechten={auths?.permissions}/>
               <div className="flex flex-grow">
                 <main className=" flex-grow p-4 bg-black/80">{children}</main>
               </div>

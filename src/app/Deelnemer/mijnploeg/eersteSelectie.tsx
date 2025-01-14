@@ -1,9 +1,9 @@
 import React from 'react'
 
-const eersteSelectie = () => {
+const EersteSelectie = () => {
   return (
     <div>eersteSelectie</div>
   )
 }
 
-export default eersteSelectie
+export default EersteSelectie
