@@ -16,7 +16,7 @@ export const deelnemers = pgTable("deelnemers", {
   email: varchar("email").unique().notNull(),
   telefoon: varchar("phone").unique().notNull(),
   ploegnaam: varchar("teamnaam").unique().notNull(),
-  actief: boolean("active").notNull().default(true),
+  actief: boolean("active").notNull().default(false),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at")
     .notNull()

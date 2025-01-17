@@ -1,14 +1,17 @@
 "use client"
 import { KindeUser } from "@kinde-oss/kinde-auth-nextjs/types";
-import { useState } from "react"
+
 
 
 interface Props {
   boodschap:string;
-  user: KindeUser<Record<string, any>>
+  user: KindeUser<Record<string, unknown>>;
+  deelnemerid: number;
+  ploegnaam:string;
+  selectie: selecties[]
 }
-const EersteSelectie = ({boodschap,user}: Props) => {
-  const [huidigeSelectie, setHuidigeSelectie]=useState(null)
+const EersteSelectie = ({boodschap,user,deelnemerid,ploegnaam}: Props) => {
+  //const [huidigeSelectie, setHuidigeSelectie]=useState(null)
   console.log(`huidige gebruiker: ${user.id}`)
   console.log(boodschap)
   return (

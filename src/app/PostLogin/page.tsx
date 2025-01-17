@@ -1,6 +1,6 @@
 import React from 'react'
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import { getDeelnemerById } from '@/lib/queries/users/users_queries';
+import { getDeelnemerById,getPloegnamen } from '@/lib/queries/users/users_queries';
 import Aanvullen from './Aanvullen';
 
 const PostLogin = async () => {
@@ -9,12 +9,12 @@ const PostLogin = async () => {
 
     const dbuser = await getDeelnemerById(user.id)
 
-    console.log(dbuser)
+   // console.log(dbuser)
   return (
     <>
     {
         dbuser == null ?(
-            <Aanvullen user={user}/>
+            <Aanvullen user={user!} ploegnamen={await getPloegnamen()} />
         ) : (
             <p>gebruiker gevonden</p>
         )

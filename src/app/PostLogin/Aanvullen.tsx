@@ -1,46 +1,29 @@
 "use client";
-import { KindeUser } from "@kinde-oss/kinde-auth-nextjs/types";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Loader2 } from "lucide-react";
+import Input from "@/components/forms/input";
 
 interface Props {
-  user: KindeUser<Record<string, any>>;
+  ploegnamen: {
+    ploegnaam: string;
+  }[];
+  user: KindeUser<Record<string, unknown>>;
 }
+import { useActionState } from "react";
+import {
+  InsertDeelnemerAction,
+  insertDeelnemerSchemaErrorType,
+} from "../actions/deelnemersActions";
+import { KindeUser } from "@kinde-oss/kinde-auth-nextjs/types";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
-const formSchema = z.object({
-  ploegnaam: z.string().min(1, "Geef uw ploeg een naam"),
-  telefoon: z.string().min(1, "Gelieve een telefoonnummer in te geven"),
-  kinde: z.string(),
-  naam: z.string(),
-  voornaam: z.string(),
-  email: z.string(),
-});
-
-const Aanvullen = ({ user }: Props) => {
-  const bewaarGegevens = async (data: z.infer<typeof formSchema>) => {
-    console.log(data);
-  };
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      naam: user.given_name!,
-      voornaam: user.family_name!,
-      email: user.email!,
-      kinde: user.id,
-    },
+const Aanvullen = ({ user, ploegnamen }: Props) => {
+  const [state, action, isPending] = useActionState(InsertDeelnemerAction, {
+    errors: {} as insertDeelnemerSchemaErrorType,
+  });
+  const ploegen = ploegnamen.map((item) => {
+    return item.ploegnaam;
   });
 
   return (
@@ -52,88 +35,96 @@ const Aanvullen = ({ user }: Props) => {
           vullen
         </p>
       </div>
+      <>{state.allSaved && <p>Alles werd bewaard...</p>}</>
       <div>
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(bewaarGegevens)}
-            className="w-full p-5 border"
-          >
-            <FormField
-            
-              control={form.control}
+        <form action={action}>
+          <div className="grid w-full max-w-sm items-center gap-2">
+            <span>Ploegnaam</span>
+            <Input
+            errors={state.errors?.fieldErrors.ploegnaam}
+              type="text"
+              id="ploegnaam"
               name="ploegnaam"
-              render={({ field }) => (
-                <FormItem className="py-2">
-                  <FormLabel>Ploegnaam</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="uw magnifiek bedachte naam..."
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              placeholder="uw magnifiek bedachte naam..."
+              className="border rounded p-2 bg-gray-800"
             />
-                        <FormField
-              control={form.control}
-              name="telefoon"
-              render={({ field }) => (
-                <FormItem className="py-2">
-                  <FormLabel>Telefoon</FormLabel>
-                  <FormControl>
-                    <Input placeholder="+32499999999" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <hr className="pt-2"/>
-            <FormField
-              control={form.control}
-              name="voornaam"
-              render={({ field }) => (
-                <FormItem className="py-2">
-                  <FormLabel>Voornaam</FormLabel>
-                  <FormControl>
-                    <Input defaultValue={user.given_name!} disabled />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="naam"
-              render={({ field }) => (
-                <FormItem className="py-2">
-                  <FormLabel>Naam</FormLabel>
-                  <FormControl>
-                    <Input defaultValue={user.family_name!} disabled />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem className="py-2">
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input defaultValue={user.email!} disabled />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div className="py-2">
-                <Button variant="outline" type="submit">Bewaar</Button>
-            </div>
+          </div>
 
-          </form>
-        </Form>
+          <div className="grid w-full max-w-sm items-center gap-2 pt-3">
+            <span>Uw Telefoonnummer</span>
+            <Input
+            errors={state.errors?.fieldErrors.telefoon}
+              type="text"
+              id="telefoon"
+              name="telefoon"
+              placeholder="+32499999999"
+              className="border rounded p-2 bg-gray-800"
+            />
+          </div>
+          <div hidden>
+            <Input type="text" id="kinde" name="kinde" defaultValue={user.id} />
+            <Input
+              type="text"
+              id="voornaam"
+              name="voornaam"
+              defaultValue={user.given_name!}
+            />
+            <Input
+              type="text"
+              id="naam"
+              name="naam"
+              defaultValue={user.family_name!}
+            />
+            <Input
+              type="text"
+              id="email"
+              name="email"
+              defaultValue={user.email!}
+            />
+          </div>
+          {state.allSaved ? (
+            <div className="py-2">
+              <Alert className="bg-green-600 rounded">
+                <AlertTitle>Alles Bewaard</AlertTitle>
+                <AlertDescription>
+                  U kunt nu uw ploeg beginnen samenstellen
+                </AlertDescription>
+              </Alert>
+            </div>
+          ) : (
+            <div className="py-2">
+              {isPending ? (
+                <Button variant="outline" disabled>
+                  <Loader2 className="animate-spin/>" /> Bewaren...
+                </Button>
+              ) : (
+                <Button variant="outline" type="submit">
+                  Bewaar
+                </Button>
+              )}
+            </div>
+          )}
+        </form>
+      </div>
+
+      <hr className="pt-2" />
+      <div className="py-2">
+        <h2 className="text-xl">Reeds gebruikte namen</h2>
+        <p>
+          Een ploegnaam moet uniek zijn om zaken overzichtelijk te kunnen
+          houden.
+        </p>
+        <div className="py-2">
+          {ploegen?.map((p) => {
+            return (
+              <div key={p} className="m-2">
+                <Button variant="outline" disabled={isPending}>
+                  {p}
+                </Button>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </>
   );
